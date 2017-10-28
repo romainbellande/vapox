@@ -1,0 +1,7 @@
+<mat-sidenav-container class="global-wrapper">
+  <mat-sidenav #sidenav class="global-wrapper__mat-sidenav">
+    <app-sidenav [sidenav]="sidenav"></app-sidenav>
+  </mat-sidenav>
+    <app-header [sidenav]="sidenav" ></app-header>
+    <ng-content></ng-content>
+</mat-sidenav-container>

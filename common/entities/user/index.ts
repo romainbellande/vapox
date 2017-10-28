@@ -1,6 +1,7 @@
 import { Endpoint } from '../../models';
 
 export * from './user-connect.interface';
+export * from './user-connected.interface';
 export * from './user-create.interface';
 export * from './user.interface';
 

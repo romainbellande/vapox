@@ -32,4 +32,16 @@ export class BaseService {
     const user = await this.userModel.findById(userId).populate('bases').exec();
     return user.bases;
   }
+
+  async update(base: Base): Promise<Base> {
+    return await this.baseModel.findByIdAndUpdate(
+      base._id, base,
+      { new: true }).then(doc => {
+        return doc.save();
+      });
+  }
+
+  async remove(baseId: string): Promise<Base> {
+    return await this.baseModel.findByIdAndRemove(baseId);
+  }
 }

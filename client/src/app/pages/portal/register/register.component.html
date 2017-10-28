@@ -1,0 +1,14 @@
+<section class="register">
+  <form [formGroup]="registerForm" class="register__form">
+    <mat-form-field class="register__form__field">
+      <input type="text" matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field class="register__form__field">
+      <input type="email" matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="register__form__field">
+      <input type="password" matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <button (click)="onSubmit()" mat-raised-button color="primary">Register</button>
+  </form>
+</section>

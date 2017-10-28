@@ -18,7 +18,6 @@ export class AuthService {
         return {
           expiresIn,
           token,
-          userId: userDoc.id,
         };
       })
       .catch(console.error);

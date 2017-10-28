@@ -21,9 +21,4 @@ export class UserController {
   async find(@Req() req): Promise<User> {
     return this.userService.findById(req.user.id);
   }
-
-  // @Get()
-  // async findAll(): Promise<User[]> {
-  //   return this.userService.findAll();
-  // }
 }

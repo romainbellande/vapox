@@ -1,0 +1,11 @@
+<section class="connect">
+  <form [formGroup]="connectForm" class="connect__form">
+    <mat-form-field class="connect__form__field">
+      <input type="text" matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field class="connect__form__field">
+      <input type="password" matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <button (click)="onSubmit()" mat-raised-button color="primary">Connect</button>
+  </form>
+</section>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, Req } from '@nestjs/common';
 
 import { AppConfig } from '../../../../../common/config';
 import { UserEndpoint, Base, BaseCreate, BaseEndpoint } from '../../../../../common/entities';
@@ -12,11 +12,6 @@ export class BaseController {
     console.info(endpoint);
   }
 
-  @Post()
-  async create(@Req() req, @Body() baseCreate: BaseCreate): Promise<Base> {
-    return this.baseService.create(req.user.id, baseCreate);
-  }
-
   @Get(BaseEndpoint.param)
   async find(@Param() param): Promise<Base> {
     return this.baseService.find(param);
@@ -25,5 +20,20 @@ export class BaseController {
   @Get()
   async findAll(@Req() req): Promise<Base[]> {
     return this.baseService.findAll(req.user.id);
+  }
+
+  @Post()
+  async create(@Req() req, @Body() baseCreate: BaseCreate): Promise<Base> {
+    return this.baseService.create(req.user.id, baseCreate);
+  }
+
+  @Put(BaseEndpoint.param)
+  async update(@Body() base: Base): Promise<Base> {
+    return this.baseService.update(base);
+  }
+
+  @Delete(BaseEndpoint.param)
+  async remove(@Param() param): Promise<Base> {
+    return this.baseService.remove(param.baseId);
   }
 }

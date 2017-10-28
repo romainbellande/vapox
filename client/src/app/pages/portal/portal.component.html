@@ -1,0 +1,12 @@
+<app-page class="portal">
+  <div *ngIf="isRegistrationMod; else connect" class="portal__register">
+    <app-register></app-register>
+    <button (click)="isRegistrationMod = false">already registered ?</button>
+  </div>
+  <ng-template #connect>
+    <div class="portal__connect">
+      <app-connect ></app-connect>
+      <button (click)="isRegistrationMod = true">Go back to registration</button>
+    </div>
+  </ng-template>
+</app-page>

@@ -1,0 +1,10 @@
+@import "lib";
+
+html, body, material-app, mat-sidenav-container {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: $color__grey--light;
+}

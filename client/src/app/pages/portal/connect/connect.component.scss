@@ -1,0 +1,10 @@
+.connect {
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    &__field {
+      width: 100%;
+    }
+  }
+}
