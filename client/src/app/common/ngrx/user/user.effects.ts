@@ -7,7 +7,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 
-import { $, Connection, Registration } from './user.actions';
+import { NgrxEffect } from '../utils/ngrx/ngrx.effect';
+import { types } from './user.actions';
 import { UserService } from '../../../core/services';
 
 @Injectable()
@@ -15,17 +16,13 @@ export class UserEffects {
   constructor(private actions: Actions,
               private userService: UserService) {}
 
-  @Effect()
-  userConnection$: Observable<Action> = this.actions
-    .ofType($.CONNECTION)
-    .switchMap((action: Connection) => this.userService.connect(action.payload)
-      .map((userConnected) => ({ type: $.CONNECTION_SUCCESS, payload: userConnected }))
-      .catch((error) => Observable.of({ type: $.CONNECTION_FAIL, payload: error })));
+  private ngrxEffect: NgrxEffect = new NgrxEffect(this.userService, this.actions);
 
   @Effect()
-  userRegistration$: Observable<Action> = this.actions
-    .ofType($.REGISTRATION)
-    .switchMap((action: Registration) => this.userService.register(action.payload)
-      .map((userConnected) => ({ type: $.REGISTRATION_SUCCESS, payload: userConnected }))
-      .catch((error) => Observable.of({ type: $.REGISTRATION_FAIL, payload: error })));
+  userConnectiontypes = this.ngrxEffect
+    .create(this.userService.connect, types.CONNECTION, types.CONNECTION_SUCCESS, types.CONNECTION_FAIL);
+
+  @Effect()
+  userRegistrationtypes = this.ngrxEffect
+    .create(this.userService.register, types.REGISTRATION, types.REGISTRATION_SUCCESS, types.REGISTRATION_FAIL);
 }

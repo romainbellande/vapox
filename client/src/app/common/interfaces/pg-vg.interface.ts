@@ -1,7 +1,7 @@
 import { PgVgLabel } from '../types';
 
 export interface PgVg {
-  label: PgVgLabel;
+  text: PgVgLabel;
   pg: number;
   vg: number;
 }

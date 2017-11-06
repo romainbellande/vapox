@@ -6,26 +6,32 @@ import { EntityState } from './utils/entity/entity.states';
 
 import { fromUser, UserState } from './user';
 import { fromBase } from './base';
-import { Base } from '../../../../../common/entities';
+import { fromBooster } from './booster';
 
 import { BaseEffects } from './base/base.effects';
 import { UserEffects } from './user/user.effects';
+import { BoosterEffects } from './booster/booster.effects';
+
+import { Base, Booster } from '../../../../../common/entities';
 
 export { fromBase, fromUser };
 
 export interface AppState {
   user: UserState;
   base: EntityState<Base>;
+  booster: EntityState<Booster>;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   user: fromUser.reducer,
-  base: fromBase.reducer
+  base: fromBase.reducer,
+  booster: fromBooster.reducer
 };
 
 export const effects = [
   UserEffects,
-  BaseEffects
+  BaseEffects,
+  BoosterEffects
 ];
 
 export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('Registered Reducers');

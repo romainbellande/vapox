@@ -1,0 +1,10 @@
+<app-page class="base-create">
+  <app-comp-form
+    [inputs]="inputs"
+    [form]="baseCreateForm"
+    [isEditMod]="isEditMod"
+    previousUrl="/"
+    (onSubmit)="onSubmit($event)"
+    (onRemove)="onRemove($event)">
+  </app-comp-form>
+</app-page>

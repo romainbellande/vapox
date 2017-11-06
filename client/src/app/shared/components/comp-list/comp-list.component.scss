@@ -1,0 +1,19 @@
+@import "lib";
+
+.app-comp-list {
+  &__list {
+    &__item {
+      /deep/ {
+        .mat-list-item-content {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+  &__add {
+    position: absolute;
+    right: rem(15);
+    bottom: rem(15);
+  }
+}

@@ -11,6 +11,7 @@ import { GlobalWrapperComponent,
          SidenavComponent } from './components';
 
 import { BaseService,
+         BoosterService,
          UserService } from './services';
 
 const components = [
@@ -20,6 +21,7 @@ const components = [
 const services = [
   CookieService,
   BaseService,
+  BoosterService,
   UserService
 ];
 

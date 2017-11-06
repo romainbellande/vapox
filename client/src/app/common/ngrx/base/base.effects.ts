@@ -1,54 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 import { types } from './base.actions';
 import { NgrxEffect } from '../../ngrx/utils/ngrx/ngrx.effect';
 import { BaseService } from '../../../core/services';
-import { Base } from '../../../../../../common/entities/base';
-import { NgrxAction } from '../utils/ngrx/interfaces';
 
 @Injectable()
 export class BaseEffects {
-  private ngrxEffect: NgrxEffect<Base>;
 
   constructor(private actions$: Actions,
-              private baseService: BaseService) {
-    this.ngrxEffect = new NgrxEffect(this.actions$);
-  }
+    private baseService: BaseService) {
+    }
+  private ngrxEffect: NgrxEffect = new NgrxEffect(this.baseService, this.actions$);
   @Effect()
-  baseAdd$: Observable<Action> = this.actions$
-  .ofType(types.ADD)
-  .switchMap((action: NgrxAction) =>
-    this.baseService.post(action.payload)
-    .map((base: Base) => ({ type: types.ADD_SUCCESS, payload: base }))
-    .catch(error => Observable.of({ type: types.ADD_FAIL, payload: error })));
+  baseAdd$ = this.ngrxEffect
+    .create(this.baseService.post, types.ADD, types.ADD_SUCCESS, types.ADD_FAIL);
 
   @Effect()
-  baseLoad$: Observable<Action> = this.actions$
-    .ofType(types.LOAD)
-    .switchMap((action: NgrxAction) =>
-      this.baseService.findAll()
-      .map((bases: Base[]) => ({ type: types.LOAD_SUCCESS, payload: bases }))
-      .catch(error => Observable.of({ type: types.LOAD_FAIL, payload: error })));
+  baseLoad$ = this.ngrxEffect
+    .create(this.baseService.findAll, types.LOAD, types.LOAD_SUCCESS, types.LOAD_FAIL);
 
   @Effect()
-  baseUpdate$: Observable<Action> = this.actions$
-    .ofType(types.UPDATE)
-    .switchMap((action: NgrxAction) =>
-      this.baseService.update(action.payload)
-      .map((base: Base) => ({ type: types.UPDATE_SUCCESS, payload: base }))
-      .catch(error => Observable.of({ type: types.UPDATE_FAIL, payload: error })));
+  baseUpdate$ = this.ngrxEffect
+    .create(this.baseService.update, types.UPDATE, types.UPDATE_SUCCESS, types.UPDATE_FAIL);
 
   @Effect()
-  baseRemove$: Observable<Action> = this.actions$
-    .ofType(types.REMOVE)
-    .switchMap((action: NgrxAction) =>
-      this.baseService.remove(action.payload)
-      .map((base) => ({ type: types.REMOVE_SUCCESS, payload: base }))
-      .catch(error => Observable.of({ type: types.REMOVE_FAIL, payload: error })));
+  baseRemove$ = this.ngrxEffect
+    .create(this.baseService.remove, types.REMOVE, types.REMOVE_SUCCESS, types.REMOVE_FAIL);
 }
-
-// baseAdd$ = this.ngrxEffect
-// .create(types.ADD, types.ADD_SUCCESS, types.ADD_FAIL, this.baseService.post);

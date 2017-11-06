@@ -22,7 +22,7 @@ export class ConnectComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.connectForm.valid) {
-      this.store.dispatch({ type: fromUser.actions.$.CONNECTION, payload: this.connectForm.value });
+      this.store.dispatch({ type: fromUser.types.CONNECTION, payload: this.connectForm.value });
     }
   }
 

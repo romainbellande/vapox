@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   public onSubmit(): void {
     if (this.registerForm.valid) {
       this.store.dispatch({
-        type: fromUser.actions.$.REGISTRATION,
+        type: fromUser.types.REGISTRATION,
         payload: this.registerForm.value as UserCreate
       });
     }
@@ -38,5 +38,4 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.required]
     });
   }
-
 }

@@ -1,0 +1,26 @@
+<section class="app-comp-form">
+  <form [formGroup]="form" class="app-comp-form__form">
+    <ng-container *ngFor="let input of inputs" [ngSwitch]="input.type">
+      <mat-form-field class="base-create__form__field" *ngSwitchCase="'select'">
+        <mat-select [placeholder]="input.placeholder" [formControlName]="input.formControlName">
+          <mat-option [value]="options.value" *ngFor="let options of input.options">{{ options.text }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="app-comp-form__form__field" *ngSwitchDefault>
+        <input
+          [type]="input.type"
+          matInput
+          [placeholder]="input.placeholder"
+          [formControlName]="input.formControlName">
+      </mat-form-field>
+    </ng-container>
+    <div class="app-comp-form__form__buttons">
+      <button class="app-comp-form__form__buttons__item" (click)="_onSubmit()" mat-raised-button color="primary">Save</button>
+      <button class="app-comp-form__form__buttons__item" *ngIf="isEditMod" (click)="_onRemove()" mat-raised-button color="warn">Delete</button>
+    </div>
+  </form>
+  <button class="app-comp-form__prev" mat-fab color="primary" [routerLink]="previousUrl">
+    <fa name="chevron-left"></fa>
+  </button>
+</section>

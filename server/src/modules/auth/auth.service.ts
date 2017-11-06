@@ -13,7 +13,7 @@ export class AuthService {
     return await this.userModel.findOne(userConnect)
       .exec()
       .then((userDoc) => {
-        const expiresIn = 60 * 60, secretOrKey = 'Iet4weedEif0juer';
+        const expiresIn = '360d', secretOrKey = 'Iet4weedEif0juer';
         const token = jwt.sign({id: userDoc.id}, secretOrKey, { expiresIn });
         return {
           expiresIn,

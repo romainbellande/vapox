@@ -1,30 +1,31 @@
 import { ActionReducer } from '@ngrx/store';
 import { Base } from '../../../../../../common/entities/base';
-import { types } from './base.actions';
-import { EntityState, initialState, EntityAdapter } from '../utils/entity';
+import { types, BaseActions } from './base.actions';
+import { EntityState, initialState } from '../utils/entity';
+import { NgrxAction } from '../utils/ngrx/interfaces';
 
-export function reducer(state = initialState, action: { type: string, payload: any }): EntityState<Base> {
-  const adapter = new EntityAdapter<Base>(state, action.payload);
+export function reducer(state: EntityState<Base> = initialState, action: NgrxAction): EntityState<Base> {
+  const actions = new BaseActions(state, action.payload);
 
   switch (action.type) {
-    case types.ADD: {
-      return adapter.add();
+    case types.ADD_SUCCESS: {
+      return actions.add();
     }
 
     case types.LOAD_SUCCESS: {
-      return adapter.loadSuccess();
+      return actions.loadSuccess();
     }
 
     case types.REMOVE_SUCCESS: {
-      return adapter.removeSuccess();
+      return actions.removeSuccess();
     }
 
     case types.SELECT: {
-      return adapter.select();
+      return actions.select();
     }
 
     case types.UPDATE_SUCCESS: {
-      return adapter.updateSuccess();
+      return actions.updateSuccess();
     }
 
     default: {

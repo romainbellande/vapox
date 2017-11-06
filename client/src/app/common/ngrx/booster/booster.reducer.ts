@@ -1,34 +1,35 @@
-// import { ActionReducer } from '@ngrx/store';
-// import { Booster } from '../../../../../../common/entities/booster';
-// import { types } from './booster.actions';
-// import { EntityState, initialState, EntityAdapter } from '../utils/entity';
+import { ActionReducer } from '@ngrx/store';
+import { Booster } from '../../../../../../common/entities/booster';
+import { types, BoosterActions } from './booster.actions';
+import { EntityState, initialState } from '../utils/entity';
+import { NgrxAction } from '../utils/ngrx/interfaces';
 
-// export function reducer(state = initialState, action: { type: string, payload: any }): EntityState<Booster> {
-//   const adapter = new EntityAdapter<Booster>(state, action.payload);
+export function reducer(state: EntityState<Booster> = initialState, action: NgrxAction): EntityState<Booster> {
+  const actions = new BoosterActions(state, action.payload);
 
-//   switch (action.type) {
-//     case types.ADD: {
-//       return adapter.add();
-//     }
+  switch (action.type) {
+    case types.ADD: {
+      return actions.add();
+    }
 
-//     case types.LOAD_SUCCESS: {
-//       return adapter.loadSuccess();
-//     }
+    case types.LOAD_SUCCESS: {
+      return actions.loadSuccess();
+    }
 
-//     case types.REMOVE_SUCCESS: {
-//       return adapter.removeSuccess();
-//     }
+    case types.REMOVE_SUCCESS: {
+      return actions.removeSuccess();
+    }
 
-//     case types.SELECT: {
-//       return adapter.select();
-//     }
+    case types.SELECT: {
+      return actions.select();
+    }
 
-//     case types.UPDATE_SUCCESS: {
-//       return adapter.updateSuccess();
-//     }
+    case types.UPDATE_SUCCESS: {
+      return actions.updateSuccess();
+    }
 
-//     default: {
-//       return state;
-//     }
-//   }
-// }
+    default: {
+      return state;
+    }
+  }
+}

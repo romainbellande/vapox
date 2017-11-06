@@ -3,21 +3,55 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AppState, fromBase } from '../../../common/ngrx';
-import { PgVg } from '../../../common/interfaces';
-import { pgVgList } from '../../../common/data';
-import { BaseCreate, Base } from '../../../../../../common/entities/base';
+import { AppState, fromBase } from '../../../../common/ngrx';
+import { PgVg, FormInput } from '../../../../common/interfaces';
+import { pgVgList } from '../../../../common/data';
+import { BaseCreate, Base } from '../../../../../../../common/entities/base';
 
 @Component({
-  selector: 'app-base-create',
-  templateUrl: './base-create.component.html',
-  styleUrls: ['./base-create.component.scss']
+  selector: 'app-base-form',
+  templateUrl: './base-form.component.html',
+  styleUrls: ['./base-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BaseCreateComponent implements OnInit {
+export class BaseFormComponent implements OnInit {
   public baseCreateForm: FormGroup;
   public pgVgList: PgVg[] = pgVgList;
   public isEditMod: boolean;
   public editedBase: Base;
+  public inputs: FormInput[] = [
+    {
+      type: 'text',
+      placeholder: 'Label',
+      formControlName: 'label'
+    },
+    {
+      type: 'number',
+      placeholder: 'Ml',
+      formControlName: 'ml'
+    },
+    {
+      type: 'number',
+      placeholder: 'Price',
+      formControlName: 'price'
+    },
+    {
+      type: 'select',
+      placeholder: 'Pg / vg',
+      formControlName: 'pgVg',
+      options: pgVgList.map(item => ({ text: item.text, value: item.text }))
+    },
+    {
+      type: 'text',
+      placeholder: 'Link (optionnal)',
+      formControlName: 'link'
+    },
+    {
+      type: 'text',
+      placeholder: 'Image url (optionnal)',
+      formControlName: 'imageUrl'
+    },
+  ];
 
   constructor(private store: Store<AppState>,
               private fb: FormBuilder,
@@ -26,15 +60,13 @@ export class BaseCreateComponent implements OnInit {
 
   ngOnInit() {
     this.isEditMod = !!this.route.snapshot.params.baseId;
-    console.log('data', this.route.snapshot.data);
     if (this.isEditMod) {
       this.editedBase = this.route.snapshot.data.base;
-      console.log('this.editedMod', this.editedBase);
     }
     this.baseCreateForm = this.createForm();
   }
 
-  public remove(base: Base): void {
+  public onRemove(base: Base): void {
     this.store.dispatch({ type: fromBase.types.REMOVE, payload: this.editedBase });
     this.router.navigate(['']);
   }
@@ -61,7 +93,7 @@ export class BaseCreateComponent implements OnInit {
       label = this.editedBase.label;
       ml = this.editedBase.ml;
       price = this.editedBase.price;
-      pgVg = this.pgVgList.find(item => item.pg === this.editedBase.pg).label;
+      pgVg = this.pgVgList.find(item => item.pg === this.editedBase.pg).text;
       link = this.editedBase.link;
       imageUrl = this.editedBase.imageUrl;
     }
@@ -77,7 +109,7 @@ export class BaseCreateComponent implements OnInit {
 
   private formatData(): BaseCreate | Base {
     const pgVg: PgVg = this.pgVgList
-      .find(item => item.label === this.baseCreateForm.controls.pgVg.value);
+      .find(item => item.text === this.baseCreateForm.controls.pgVg.value);
     let base: BaseCreate | Base;
     if (this.isEditMod) {
       base = Object.assign({}, this.editedBase, this.baseCreateForm.value, {

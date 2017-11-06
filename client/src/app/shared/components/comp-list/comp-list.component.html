@@ -1,0 +1,13 @@
+<section class="app-comp-list">
+  <mat-nav-list class="app-comp-list__list">
+    <a mat-list-item  [routerLink]="'form/' + component._id" *ngFor="let component of components" class="app-comp-list__list__item">
+      {{ component.label }}
+      <span class="base__list__item__price">
+        {{ this.getPrice(component) }}€ / 100ml
+      </span>
+    </a>
+  </mat-nav-list>
+  <button class="app-comp-list__add" mat-fab color="primary" routerLink="form">
+      <fa name="plus"></fa>
+  </button>
+</section>

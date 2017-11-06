@@ -8,16 +8,16 @@ import 'rxjs/add/observable/of';
 
 import { NgrxAction } from './interfaces';
 
-export class NgrxEffect <T> {
-  constructor(private actions$: Actions) {}
+export class NgrxEffect {
+  constructor(private source: any, private actions$: Actions) {}
 
-  create(event: string,
-         eventSuccess: string,
-         eventFail: string,
-         callback: (payload: any) => Observable<T | T[]>): Observable<Action> {
+  create(callback: (payload: any) => Observable<any>,
+            event: string,
+            eventSuccess: string,
+            eventFail: string): Observable<Action> {
     return this.actions$.ofType(event)
-      .switchMap((action: NgrxAction) => callback(action.payload)
-        .map((data) => ({ type: eventSuccess, payload: action.payload}))
+      .switchMap((action: NgrxAction) => callback.bind(this.source)(action.payload)
+        .map((data) => ({ type: eventSuccess, payload: data}))
         .catch((error) => Observable.of({ type: eventFail, payload: error })));
   }
 }
